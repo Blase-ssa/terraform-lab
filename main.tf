@@ -11,39 +11,21 @@ provider "google" {
 }
 
 resource "google_compute_firewall" "firewall_http" {
-  name = "allow-puma-default"
-  # Название сети, в которой действует правило
+  name = "allow-http-default"
+  # name of a network to apply rule
   network = "default"
-  # Какой доступ разрешить
+  # rules
   allow {
     protocol = "tcp"
     ports    = ["80"]
   }
-  # Каким адресам разрешаем доступ
+  # network address range to allow access from
   source_ranges = ["0.0.0.0/0"]
-  # Правило применимо для инстансов с перечисленными тэгами
+  # this rule will be applyed to targets with same tag
   target_tags = ["http"]
 }
 
-# resource "google_compute_firewall" "firewall_icmp" {
-#   name = "allow-icmp-default"
-#   network = "default"
-#   allow {
-#     protocol = "icmp"
-#   }
-#   source_ranges = ["0.0.0.0/0"]
-#   target_tags = ["allow-icmp"]
-# }
-
-# # set up ssh key
-# # googleapi: Error 403: Required 'iam.serviceAccounts.actAs' permission for 'projects/terraform-lab-352918', forbidden
-# resource "google_compute_project_metadata" "ssh-keys" {
-#   metadata = {
-#     ssh-keys = "blase:${file("../akvelon-gcp-publick-key.key")}"
-#   }
-#   project = "terraform-lab-352918"
-# }
-
+# server #1
 resource "google_compute_instance" "vm1" {
   name          = "vm1"
   machine_type  = "e2-small"
@@ -66,7 +48,6 @@ resource "google_compute_instance" "vm1" {
     host = self.network_interface[0].access_config[0].nat_ip
     user = "scorpioncore"
     agent = false
-    # путь до приватного ключа
     private_key = file("../id_rsa")
   }
 
@@ -75,11 +56,11 @@ resource "google_compute_instance" "vm1" {
   }
 }
 
+# server #2
 resource "google_compute_instance" "vm2" {
   name         = "vm2"
   machine_type = "e2-small"
   zone         = "europe-north1-a"
-  # tags         = ["allow-icmp"]
   
   boot_disk {
     initialize_params {
