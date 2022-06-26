@@ -5,7 +5,7 @@ required_version = "~>1.2.0"
 
 provider "google" {
   # path to credentials file downloaded from GCP
-  credentials = "${file("../akvelon-gcp-service-account.json")}"
+  credentials = "${file("../../gcp-service-account.json")}"
   # project ID
   project = "terraform-lab-352918"
 }
@@ -48,7 +48,7 @@ resource "google_compute_instance" "vm1" {
     host = self.network_interface[0].access_config[0].nat_ip
     user = "scorpioncore"
     agent = false
-    private_key = file("../id_rsa")
+    private_key = file("~/.ssh/id_rsa")
   }
 
   provisioner "remote-exec" {
