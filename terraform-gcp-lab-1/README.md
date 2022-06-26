@@ -11,7 +11,9 @@
 * Go to you Google Cloud Console and download credentials file, place it somewhere outside git repository, than update path in main.tf (in 'provider "google"' block), also update project ID
 * Update you user account name (search "user" keyword) and path to secret key file if necessary
 * in bash shell navigate to project folder and use commands:
-``` terraform init # to init Terrafrodm and download ```
-``` terraform plan # to verify code and check what will be applied  ```
-``` terraform apply # to apply script ```
+```console
+terraform init # to init Terrafrodm and download 
+terraform plan # to verify code and check what will be applied
+terraform apply # to apply script 
+```
 
