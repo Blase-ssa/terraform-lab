@@ -55,28 +55,23 @@ resource "aws_iam_role_policy_attachment" "basic_lambda1" {
 data "archive_file" "lambda1" {
   type        = "zip"
   output_path = "${path.module}/files/output.zip"
-
-  source {
-    dir      = "${path.module}/files/"
-    content  = ""
-    filename = "*.py"
-  }
+  source_file = "${path.module}/files/main.py"
 }
 
 resource "aws_lambda_function" "lambda1" {
-  role = aws_iam_role.lambda1.arn
-  function_name = "${local.tag}-${local.id}"
-  runtime = "python3.9"
-  filename = data.archive_file.lambda1.output_path
-  handler = "main.lambda_handler"
+  role             = aws_iam_role.lambda1.arn
+  function_name    = "${local.tag}-${local.id}"
+  runtime          = "python3.9"
+  filename         = data.archive_file.lambda1.output_path
+  handler          = "main.lambda_handler"
   source_code_hash = data.archive_file.lambda1.output_base64sha256
 }
 
-resource "aws_lambda_url" "lambda1" {
-  function_name = aws_lambda_function.lambda1.function_name
+resource "aws_lambda_function_url" "lambda1" {
+  function_name      = aws_lambda_function.lambda1.function_name
   authorization_type = "NONE"
 }
 
 output "url" {
-  value = aws_lambda_url.lambda1.function_url
+  value = aws_lambda_function_url.lambda1.function_url
 }
