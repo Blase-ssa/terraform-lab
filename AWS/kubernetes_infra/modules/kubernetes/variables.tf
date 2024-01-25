@@ -19,10 +19,10 @@ variable "environment" {
 variable "domain_primary_zone" {
   description = "Domain you own."
   type        = map(string)
-#   default = {
-#     domain = "blase-infra.click"
-#     id     = "Z101155419KLTASVLU3J"
-#   }
+  #   default = {
+  #     domain = "blase-infra.click"
+  #     id     = "Z101155419KLTASVLU3J"
+  #   }
 }
 
 variable "aws_cluster_name" {
@@ -51,5 +51,5 @@ variable "subnet_newbits" {
   https://developer.hashicorp.com/terraform/language/functions/cidrsubnet
   EOT
   type        = string
-  default = "8"
+  default     = "8"
 }

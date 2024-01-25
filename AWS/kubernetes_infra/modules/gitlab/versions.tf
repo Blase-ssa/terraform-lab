@@ -1,12 +1,15 @@
 terraform {
   required_providers {
-    local = {
-      source = "hashicorp/local"
-      version = ">= 2.4.0"
+    helm = {
+      source  = "hashicorp/helm"
+      version = ">= 2.12.0"
     }
 
-    # module = {
-      
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.25.0"
+    }
+
     # }
     # null = {
     #   source  = "hashicorp/null"

@@ -50,20 +50,20 @@ resource "aws_iam_role" "kubernetes" {
   1. AmazonEKSClusterPolicy
   2. AmazonEKSVPCResourceController
   EOT
-  name = "eksClusterRole-${var.environment}"
+  name        = "eksClusterRole-${var.environment}"
   assume_role_policy = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "eks.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-})
-tags = {
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "eks.amazonaws.com"
+        },
+        "Action" : "sts:AssumeRole"
+      }
+    ]
+  })
+  tags = {
     aws_iam_role = "eksClusterRole-${var.environment}"
   }
 }
@@ -90,7 +90,7 @@ resource "aws_eks_cluster" "kubernetes" {
       aws_subnet.kubernetes_a.id,
       aws_subnet.kubernetes_b.id,
       #aws_subnet.kubernetes_c.id,
-      ]
+    ]
   }
 
   ## Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.

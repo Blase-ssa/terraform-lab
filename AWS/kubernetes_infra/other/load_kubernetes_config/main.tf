@@ -10,8 +10,18 @@ terraform {
     null = {
       source  = "hashicorp/null"
       version = "= 3.2.1"
-      }
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.21.1"
+    }
   }
+}
+
+variable "kubeconfig_path" {
+  description = "Path to store Kubernetes config file"
+  type        = string
+  default     = "~/.kube/config"
 }
 
 # data "terraform_remote_state" "root" {
@@ -36,6 +46,6 @@ variable "aws_cluster_name" {
 resource "null_resource" "set_aws_kube_config" {
   provisioner "local-exec" {
     # when = create
-    command = "aws eks update-kubeconfig --region ${var.aws_region} --name ${var.aws_cluster_name}"
+    command = "aws eks update-kubeconfig --region ${var.aws_region} --name ${var.aws_cluster_name} --kubeconfig ${var.kubeconfig_path}"
   }
 }

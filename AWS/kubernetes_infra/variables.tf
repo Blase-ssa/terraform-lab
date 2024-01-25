@@ -5,6 +5,7 @@ variable "aws_region" {
   # default     = "eu-central-1"
   # default     = "us-west-1"
 }
+
 variable "environment" {
   description = "Environment name."
   type        = string
@@ -24,6 +25,12 @@ variable "domain_primary_zone" {
   }
 }
 
+variable "kubeconfig_path" {
+  description = "Path to Kubernetes config file"
+  type        = string
+  default     = "~/.kube/config"
+}
+
 variable "kubernetes_domain_prefix" {
   description = "Prefix used to create FQDN for kubernetes."
   type        = string
@@ -38,4 +45,17 @@ variable "vpc_id" {
   EOT
   type        = string
   default     = "vpc-04c40bb555cf4d53e"
+}
+
+# variable "certmanager_issuer_email" {
+#   description = "Issuer email for certificate"
+#   default = "admin@blase-infra.click"
+# }
+
+variable "gitlab_edition" {
+  default = "ee"
+}
+
+variable "gitlab_chart_version" {
+  default = "7.6.1"
 }
